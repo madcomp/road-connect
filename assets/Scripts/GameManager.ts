@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, tween, Vec3 } from 'cc';
+import { _decorator, Button, Component, sys, tween, Vec3 } from 'cc';
 import { LevelSelectMenu } from './LevelSelectMenu';
 import { PuzzleManager } from './PuzzleManager';
 import { TitleScreen } from './UI/TitleScreen';
@@ -11,6 +11,8 @@ const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
 export class GameManager extends Component {
+
+    private static readonly LEVEL_KEY: string = "Level";
 
     private m_NumberOfLevels: number;
     private m_CurrentLevel: number;
@@ -62,7 +64,7 @@ export class GameManager extends Component {
     }
 
     saveProgress(levelID: number) {
-        // PlayerPrefs.SetInt(LEVEL_KEY + levelID, 1);
+        sys.localStorage.setItem(GameManager.LEVEL_KEY + levelID, "1");
     }
 
     handleTitleScreenAnimationComplete() {
@@ -133,13 +135,12 @@ export class GameManager extends Component {
             return true;
         }
         
-        // if (PlayerPrefs.GetInt(LEVEL_KEY + (levelID - 1)) == 1)
-        // {
-        //     isUnlocked = true;
-        // }
+        if (sys.localStorage.getItem(GameManager.LEVEL_KEY + (levelID - 1)) == "1")
+        {
+            return true;
+        }
 
-        // return false;
-        return true;
+        return false;
     }
 
     start() {
