@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, easing, tween, Vec3 } from 'cc';
+import { _decorator, Button, Component, tween, Vec3 } from 'cc';
 import { LevelSelectMenu } from './LevelSelectMenu';
 import { PuzzleManager } from './PuzzleManager';
 import { TitleScreen } from './UI/TitleScreen';
@@ -6,6 +6,7 @@ import { GameUI } from './UI/GameUI';
 import { LevelCreatorData } from './LevelEditor/LevelCreatorData';
 import { LevelData } from './Data/LevelData';
 import { customEasing } from './Others/CustomEasing';
+import { SFX, SoundLibrary } from './Others/SoundLibrary';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
@@ -97,7 +98,7 @@ export class GameManager extends Component {
         this.PuzzleManager.clearLevel();
         this.populateLevelSelect();
 
-        // SoundLibrary.Instance.PlaySound(SFX.DefaultClick);
+        SoundLibrary.instance.playSound(SFX.DefaultClick);
     }
 
     onPlayPressed() {
@@ -112,7 +113,7 @@ export class GameManager extends Component {
         this.LevelSelect.node.active = true;
         this.m_NumberOfLevels = this.LevelCreatorData.GameLevels.length;
         this.populateLevelSelect();
-        // SoundLibrary.Instance.PlaySound(SFX.DefaultClick);
+        SoundLibrary.instance.playSound(SFX.DefaultClick);
     }
 
     populateLevelSelect() {
@@ -142,7 +143,7 @@ export class GameManager extends Component {
     }
 
     start() {
-        // SoundLibrary.Instance.PlayMusic();
+        SoundLibrary.instance.playMusic();
     }
 
     endGameAnimation() {

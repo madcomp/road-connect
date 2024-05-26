@@ -1,5 +1,6 @@
-import { _decorator, Button, Component, instantiate, Layout, Node, Prefab } from 'cc';
+import { _decorator, Button, Component, instantiate, Layout, Prefab } from 'cc';
 import { LevelSelectButton } from './LevelSelectButton';
+import { SFX, SoundLibrary } from './Others/SoundLibrary';
 const { ccclass, property } = _decorator;
 
 @ccclass('LevelSelectMenu')
@@ -22,7 +23,7 @@ export class LevelSelectMenu extends Component {
             (buttonLevelID : number) =>
             {
                 this.node.emit("OnLevelPressed", buttonLevelID);
-                // SoundLibrary.Instance.PlaySound(SFX.DefaultClick);
+                SoundLibrary.instance.playSound(SFX.DefaultClick);
             }
         );
 

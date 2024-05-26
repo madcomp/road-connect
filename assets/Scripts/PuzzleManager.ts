@@ -2,6 +2,7 @@ import { _decorator, Component, instantiate, Node, Prefab, Size, SpriteFrame, UI
 import { PuzzlePiece } from './PuzzlePiece';
 import { LevelData } from './Data/LevelData';
 import { PieceData } from './Data/PieceData';
+import { SFX, SoundLibrary } from './Others/SoundLibrary';
 const { ccclass, property } = _decorator;
 
 @ccclass('PuzzleManager')
@@ -38,7 +39,7 @@ export class PuzzleManager extends Component {
     }
 
     levelComplete() {
-        // SoundLibrary.Instance.PlaySound(SFX.LevelComplete, 0.5);
+        SoundLibrary.instance.playSound(SFX.LevelComplete, 0.5);
 
         for (var piece of this.AllPieces)
         {

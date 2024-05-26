@@ -1,5 +1,6 @@
-import { _decorator, Component, easing, Input, Quat, Sprite, SpriteFrame, tween, Vec3 } from 'cc';
+import { _decorator, AudioSource, Component, easing, Input, Sprite, SpriteFrame, tween, Vec3 } from 'cc';
 import { CustomMath } from './Others/CustomMath';
+import { SFX, SoundLibrary } from './Others/SoundLibrary';
 const { ccclass, property } = _decorator;
 
 @ccclass('PuzzlePiece')
@@ -9,6 +10,9 @@ export class PuzzlePiece extends Component {
 
     @property({ type: Sprite })
     private m_Sprite: Sprite;
+
+    @property({ type: AudioSource })
+    private Audio: AudioSource;
 
     private m_Rotating: boolean = false;
     private m_Locked: boolean = false;
@@ -112,7 +116,7 @@ export class PuzzlePiece extends Component {
         })
         .start();
 
-        // SoundLibrary.Instance.PlaySound(SFX.ShapeRotate);
+        SoundLibrary.instance.playSound(SFX.ShapeRotate);
     }
 
     fixNegativeAngle() {
@@ -126,22 +130,24 @@ export class PuzzlePiece extends Component {
 
     onEnable() {
 
-        this.node.on(Input.EventType.MOUSE_UP, this.onMouseUp, this);
+        var self = this;
+
+        self.node.on(Input.EventType.MOUSE_UP, self.onMouseUp, self);
 
         var animationDelay: number = Math.random() * 0.5 + 0.25;
-        this.node.scale = Vec3.ZERO;
-        tween().target(this.node)
+        self.node.scale = Vec3.ZERO;
+        tween().target(self.node)
         .delay(animationDelay)
         .to(0.25,
             { scale: Vec3.ONE },
             { easing: easing.quadInOut })
         .start();
 
-        tween().target(this.node)
+        tween().target(self.node)
         .delay(animationDelay)
         .call(() =>
         {
-            // m_Audio.Play();
+            self.Audio.play();
         })
         .start();
     }
