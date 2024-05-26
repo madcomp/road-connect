@@ -20,6 +20,27 @@
                 { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
                 { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 }
             ]
+        },
+        {
+            "levelID": 1,
+            "allPieces": [
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": 0,     "startRotation": 270,   "targetRotation": 0 },
+                { "pieceID": 2,     "startRotation": 270,     "targetRotation": 180 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": 0,     "startRotation": 180,     "targetRotation": 90 },
+                { "pieceID": 4,     "startRotation": 90,     "targetRotation": 270 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": 2,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": 4,    "startRotation": 270,     "targetRotation": 180 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 }
+            ]
         }
     ]
 }

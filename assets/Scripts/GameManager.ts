@@ -3,14 +3,18 @@ import { LevelSelectMenu } from './LevelSelectMenu';
 import { PuzzleManager } from './PuzzleManager';
 import { TitleScreen } from './UI/TitleScreen';
 import { GameUI } from './UI/GameUI';
-import { customEasing } from './Others/CustomEasing';
 import { LevelCreatorData } from './LevelEditor/LevelCreatorData';
 import { LevelData } from './Data/LevelData';
+import { customEasing } from './Others/CustomEasing';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
 export class GameManager extends Component {
 
+    private m_NumberOfLevels: number;
+    private m_CurrentLevel: number;
+
+    // Controllers
     @property({ type: LevelCreatorData })
     private LevelCreatorData: LevelCreatorData;
 
@@ -20,13 +24,12 @@ export class GameManager extends Component {
     @property({ type: LevelSelectMenu })
     public LevelSelect: LevelSelectMenu;
 
+    // Screens
     @property({ type: TitleScreen })
     private TitleScreen: TitleScreen;
 
     @property({ type: GameUI })
     private GameUI: GameUI;
-
-    private m_CurrentLevel: number;
 
     getLevelWithID(levelID: number): LevelData
     {
@@ -38,6 +41,27 @@ export class GameManager extends Component {
             }
         }
         return new LevelData();
+    }
+
+    handleLevelComplete() {
+
+        var self = this;
+
+        self.GameUI.levelCompleteAnimation();
+        self.saveProgress(self.m_CurrentLevel);
+
+        if (!(self.m_CurrentLevel >= (self.m_NumberOfLevels - 1)))
+        {
+            self.levelTransition();
+        }
+        else
+        {
+            self.endGameAnimation();
+        }
+    }
+
+    saveProgress(levelID: number) {
+        // PlayerPrefs.SetInt(LEVEL_KEY + levelID, 1);
     }
 
     handleTitleScreenAnimationComplete() {
@@ -57,27 +81,26 @@ export class GameManager extends Component {
 
     onDisable() {
         this.LevelSelect.node.off("OnLevelPressed");
-        // PuzzleManager.OnLevelComplete -= HandleLevelComplete;
+        this.PuzzleManager.node.off("OnLevelComplete", this.handleLevelComplete);
         this.TitleScreen.node.off("OnAnimationComplete");
     }
 
     onLoad() {
         this.GameUI.BtnMenu.node.on(Button.EventType.CLICK, this.onMenuPressed, this);
         this.GameUI.BtnPlay.node.on(Button.EventType.CLICK, this.onPlayPressed, this);
-        // PuzzleManager.OnLevelComplete += HandleLevelComplete;
+        this.PuzzleManager.node.on("OnLevelComplete", this.handleLevelComplete, this);
         this.TitleScreen.node.on("OnAnimationComplete", this.handleTitleScreenAnimationComplete, this);
     }
 
     onMenuPressed() {
         this.LevelSelect.node.active = true;
         this.PuzzleManager.clearLevel();
-        // PopulateLevelSelect();
+        this.populateLevelSelect();
 
         // SoundLibrary.Instance.PlaySound(SFX.DefaultClick);
     }
 
     onPlayPressed() {
-
         tween().target(this.GameUI.BtnPlay.node)
         .to(0.5,
             { scale: new Vec3(1.1, 1.1, 1) },
@@ -85,28 +108,75 @@ export class GameManager extends Component {
         .call(() => this.TitleScreen.node.active = false)
         .start();
 
+        this.removeTitleScreen();
         this.LevelSelect.node.active = true;
-        // m_NumberOfLevels = LevelCreatorData.GameLevels.Count;
-        // PopulateLevelSelect();
+        this.m_NumberOfLevels = this.LevelCreatorData.GameLevels.length;
+        this.populateLevelSelect();
         // SoundLibrary.Instance.PlaySound(SFX.DefaultClick);
     }
 
     populateLevelSelect() {
-        // this.LevelSelect.ClearMenu();
+        this.LevelSelect.clearMenu();
+        for (var level of this.LevelCreatorData.GameLevels)
+        {
+            var unlocked = this.checkIfLevelIsUnlocked(level.LevelID);
+            this.LevelSelect.addLevel(level.LevelID, unlocked);
+        }
+    }
 
-        // foreach (LevelData level in LevelCreatorData.GameLevels)
+    checkIfLevelIsUnlocked(levelID: number): boolean {
+
+        // Fist level is always available
+        if (levelID == 0)
+        {
+            return true;
+        }
+        
+        // if (PlayerPrefs.GetInt(LEVEL_KEY + (levelID - 1)) == 1)
         // {
-        //     bool unlocked = CheckIfLevelIsUnlocked(level.LevelID);
-        //     LevelSelect.AddLevel(level.LevelID, unlocked);
+        //     isUnlocked = true;
         // }
+
+        // return false;
+        return true;
     }
 
     start() {
-
+        // SoundLibrary.Instance.PlayMusic();
     }
 
-    update(deltaTime: number) {
-        
+    endGameAnimation() {
+
+        var self = this;
+
+        tween(self)
+        .delay(1.5)
+        .call(() => self.GameUI.allLevelsCompleteAnimation())
+        .start();
+    }
+
+    levelTransition() {
+
+        var self = this;
+
+        tween(self)
+        .delay(1.5)
+        .call(() => {
+            self.GameUI.newLevelAnimation();
+            self.m_CurrentLevel++;
+            self.loadLevel(self.m_CurrentLevel);
+        })
+        .start();
+    }
+
+    removeTitleScreen() {
+
+        var self = this;
+
+        tween(self)
+        .delay(0.5)
+        .call(() => self.TitleScreen.node.active = false)
+        .start();
     }
 }
 

@@ -11,27 +11,34 @@ export class LevelSelectMenu extends Component {
     @property({ type: Layout })
     private ButtonGrid : Layout;
     
-    private AllButtons : Button[];
+    private AllButtons : LevelSelectButton[] = [];
 
-    start() {
-        for (var levelID: number = 0; levelID < 6; levelID++)
+    public addLevel(levelID: number, unlocked: boolean) {
+        var newLevel = instantiate(this.LevelSelectButtonPrefab).getComponent(LevelSelectButton);
+        newLevel.node.parent = this.ButtonGrid.node;
+
+        newLevel.setup(
+            levelID,
+            (buttonLevelID : number) =>
+            {
+                this.node.emit("OnLevelPressed", buttonLevelID);
+                // SoundLibrary.Instance.PlaySound(SFX.DefaultClick);
+            }
+        );
+
+        this.AllButtons.push(newLevel);
+        if (!unlocked)
         {
-            var button = instantiate(this.LevelSelectButtonPrefab).getComponent(LevelSelectButton);
-            button.node.parent = this.ButtonGrid.node;
-            
-            button.setup(
-                levelID,
-                (buttonLevelID : number) =>
-                {
-                    this.node.emit("OnLevelPressed", buttonLevelID);
-                    // SoundLibrary.Instance.PlaySound(SFX.DefaultClick);
-                }
-            );
-        }
+            newLevel.disable();
+        }    
     }
 
-    update(deltaTime: number) {
-        
+    public clearMenu() {
+        for (var button of this.AllButtons)
+        {
+            button.node.destroy();
+        }
+        this.AllButtons.length = 0;
     }
 }
 
