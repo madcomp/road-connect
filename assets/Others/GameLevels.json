@@ -83,6 +83,69 @@
                 { "pieceID": 4,    "startRotation": 180,     "targetRotation": 90 },
                 { "pieceID": 4,    "startRotation": 90,     "targetRotation": 180 }
             ]
+        },
+        {
+            "levelID": 4,
+            "allPieces": [
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": 2,    "startRotation": 0,     "targetRotation": 270 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": 2,    "startRotation": 270,     "targetRotation": 0 },
+                { "pieceID": 5,     "startRotation": 180,   "targetRotation": 270 },
+                { "pieceID": 6,     "startRotation": 270,     "targetRotation": 0 },
+                { "pieceID": 0,    "startRotation": 180,     "targetRotation": 270 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,     "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": 0,     "startRotation": 180,     "targetRotation": 90 },
+                { "pieceID": 0,    "startRotation": 0,     "targetRotation": 180 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 }
+            ]
+        },
+        {
+            "levelID": 5,
+            "allPieces": [
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": 0,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": 4,    "startRotation": 180,     "targetRotation": 270 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": 4,     "startRotation": 270,   "targetRotation": 0 },
+                { "pieceID": 1,     "startRotation": 270,     "targetRotation": 0 },
+                { "pieceID": 0,    "startRotation": 270,     "targetRotation": 180 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": 0,     "startRotation": 270,     "targetRotation": 90 },
+                { "pieceID": 4,     "startRotation": 0,     "targetRotation": 180 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 }
+            ]
+        },
+        {
+            "levelID": 6,
+            "allPieces": [
+                { "pieceID": 0,    "startRotation": 270,     "targetRotation": 0 },
+                { "pieceID": 0,    "startRotation": 0,     "targetRotation": 270 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": 0,    "startRotation": 0,     "targetRotation": 90 },
+                { "pieceID": 3,     "startRotation": 270,   "targetRotation": 180 },
+                { "pieceID": -1,     "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": 2,    "startRotation": 270,     "targetRotation": 0 },
+                { "pieceID": 1,     "startRotation": 270,     "targetRotation": 0 },
+                { "pieceID": 3,     "startRotation": 180,     "targetRotation": 270 },
+                { "pieceID": 0,    "startRotation": 180,     "targetRotation": 270 },
+                { "pieceID": -1,    "startRotation": 0,     "targetRotation": 0 },
+                { "pieceID": 0,    "startRotation": 270,     "targetRotation": 90 },
+                { "pieceID": 3,    "startRotation": 0,     "targetRotation": 90 },
+                { "pieceID": 0,    "startRotation": 270,     "targetRotation": 180 }
+            ]
         }
     ]
 }
