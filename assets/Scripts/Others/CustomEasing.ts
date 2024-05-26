@@ -1,5 +1,7 @@
+import { CustomMath } from "./CustomMath";
+
 export namespace customEasing {
-    export function punch(k: number) : number {
+    export function punch(k: number): number {
         
         // Using LeanTween.EasePunch keyframes:
         var keyframes = [
@@ -17,9 +19,9 @@ export namespace customEasing {
         return customCurve(keyframes, k);
     }
 
-    function customCurve(keyframes, k: number) : number {
+    function customCurve(keyframes, k: number): number {
 
-        var t = Math.max(0, Math.min(1, k));
+        var t = CustomMath.clamp(k, 0, 1);
     
         // Using linear interpolation:
         for (let i = 0; i < keyframes.length - 1; i++) {

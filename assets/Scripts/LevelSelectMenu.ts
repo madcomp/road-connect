@@ -14,12 +14,11 @@ export class LevelSelectMenu extends Component {
     private AllButtons : Button[];
 
     start() {
-        for (var i = 0; i < 6; i++)
+        for (var levelID: number = 0; levelID < 6; levelID++)
         {
             var button = instantiate(this.LevelSelectButtonPrefab).getComponent(LevelSelectButton);
             button.node.parent = this.ButtonGrid.node;
             
-            var levelID = i+1;
             button.setup(
                 levelID,
                 (buttonLevelID : number) =>

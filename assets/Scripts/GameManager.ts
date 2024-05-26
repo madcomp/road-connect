@@ -1,33 +1,54 @@
 import { _decorator, Button, Component, easing, tween, Vec3 } from 'cc';
-import { TitleScreen } from './TitleScreen';
-import { GameUI } from './GameUI';
 import { LevelSelectMenu } from './LevelSelectMenu';
-import { customEasing } from './CustomEasing';
+import { PuzzleManager } from './PuzzleManager';
+import { TitleScreen } from './UI/TitleScreen';
+import { GameUI } from './UI/GameUI';
+import { customEasing } from './Others/CustomEasing';
+import { LevelCreatorData } from './LevelEditor/LevelCreatorData';
+import { LevelData } from './Data/LevelData';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
 export class GameManager extends Component {
 
+    @property({ type: LevelCreatorData })
+    private LevelCreatorData: LevelCreatorData;
+
+    @property({ type: PuzzleManager })
+    private PuzzleManager: PuzzleManager;
+
     @property({ type: LevelSelectMenu })
-    public LevelSelect : LevelSelectMenu;
+    public LevelSelect: LevelSelectMenu;
 
     @property({ type: TitleScreen })
-    private TitleScreen : TitleScreen;
+    private TitleScreen: TitleScreen;
 
     @property({ type: GameUI })
-    private GameUI : GameUI;
+    private GameUI: GameUI;
 
-    private m_CurrentLevel : number;
+    private m_CurrentLevel: number;
+
+    getLevelWithID(levelID: number): LevelData
+    {
+        for (var levelData of this.LevelCreatorData.GameLevels)
+        {
+            if (levelData.LevelID == levelID)
+            {
+                return levelData;
+            }
+        }
+        return new LevelData();
+    }
 
     handleTitleScreenAnimationComplete() {
         this.GameUI.buttonPlayAppear();
     }
 
-    loadLevel(levelID : number) {
+    loadLevel(levelID: number) {
         this.m_CurrentLevel = levelID;
         this.LevelSelect.node.active = false;
-        // PuzzleManager.PopulateLevel(GetLevelWithID(levelID), LevelCreatorData.LevelSprites);
-        this.GameUI.setLevelName("Level " + levelID);
+        this.PuzzleManager.populateLevel(this.getLevelWithID(levelID), this.LevelCreatorData.LevelSprites);
+        this.GameUI.setLevelName("Level " + (levelID + 1));
     }
 
     onEnable() {
@@ -49,7 +70,7 @@ export class GameManager extends Component {
 
     onMenuPressed() {
         this.LevelSelect.node.active = true;
-        // PuzzleManager.ClearLevel();
+        this.PuzzleManager.clearLevel();
         // PopulateLevelSelect();
 
         // SoundLibrary.Instance.PlaySound(SFX.DefaultClick);
@@ -68,6 +89,16 @@ export class GameManager extends Component {
         // m_NumberOfLevels = LevelCreatorData.GameLevels.Count;
         // PopulateLevelSelect();
         // SoundLibrary.Instance.PlaySound(SFX.DefaultClick);
+    }
+
+    populateLevelSelect() {
+        // this.LevelSelect.ClearMenu();
+
+        // foreach (LevelData level in LevelCreatorData.GameLevels)
+        // {
+        //     bool unlocked = CheckIfLevelIsUnlocked(level.LevelID);
+        //     LevelSelect.AddLevel(level.LevelID, unlocked);
+        // }
     }
 
     start() {

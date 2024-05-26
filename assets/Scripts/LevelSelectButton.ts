@@ -5,14 +5,15 @@ const { ccclass, property } = _decorator;
 export class LevelSelectButton extends Component {
     
     @property({ type: Label })
-    private Label : Label;
+    private Label: Label;
 
-    public setup(level: number, onClick: (levelID : number) => void) {
-        this.node.name += "_" + level;
-        this.Label.string = level.toString();
+    public setup(levelID: number, onClick: (levelID : number) => void) {
+        var levelName = levelID + 1;
+        this.node.name += "_" + levelName;
+        this.Label.string = levelName.toString();
         this.node.on(
             Button.EventType.CLICK,
-            () => onClick(level),
+            () => onClick(levelID),
             this
         );
     }
