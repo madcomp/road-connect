@@ -17,13 +17,42 @@ export class GameManager extends Component {
     @property({ type: GameUI })
     private GameUI : GameUI;
 
+    private m_CurrentLevel : number;
+
     handleTitleScreenAnimationComplete() {
         this.GameUI.buttonPlayAppear();
     }
 
+    loadLevel(levelID : number) {
+        this.m_CurrentLevel = levelID;
+        this.LevelSelect.node.active = false;
+        // PuzzleManager.PopulateLevel(GetLevelWithID(levelID), LevelCreatorData.LevelSprites);
+        this.GameUI.setLevelName("Level " + levelID);
+    }
+
+    onEnable() {
+        this.LevelSelect.node.on("OnLevelPressed", this.loadLevel, this);
+    }
+
+    onDisable() {
+        this.LevelSelect.node.off("OnLevelPressed");
+        // PuzzleManager.OnLevelComplete -= HandleLevelComplete;
+        this.TitleScreen.node.off("OnAnimationComplete");
+    }
+
     onLoad() {
+        this.GameUI.BtnMenu.node.on(Button.EventType.CLICK, this.onMenuPressed, this);
         this.GameUI.BtnPlay.node.on(Button.EventType.CLICK, this.onPlayPressed, this);
-        this.TitleScreen.OnAnimationComplete = () => this.handleTitleScreenAnimationComplete();
+        // PuzzleManager.OnLevelComplete += HandleLevelComplete;
+        this.TitleScreen.node.on("OnAnimationComplete", this.handleTitleScreenAnimationComplete, this);
+    }
+
+    onMenuPressed() {
+        this.LevelSelect.node.active = true;
+        // PuzzleManager.ClearLevel();
+        // PopulateLevelSelect();
+
+        // SoundLibrary.Instance.PlaySound(SFX.DefaultClick);
     }
 
     onPlayPressed() {

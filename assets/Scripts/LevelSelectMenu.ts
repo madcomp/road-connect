@@ -17,8 +17,17 @@ export class LevelSelectMenu extends Component {
         for (var i = 0; i < 6; i++)
         {
             var button = instantiate(this.LevelSelectButtonPrefab).getComponent(LevelSelectButton);
-            button.setup(i+1);
             button.node.parent = this.ButtonGrid.node;
+            
+            var levelID = i+1;
+            button.setup(
+                levelID,
+                (buttonLevelID : number) =>
+                {
+                    this.node.emit("OnLevelPressed", buttonLevelID);
+                    // SoundLibrary.Instance.PlaySound(SFX.DefaultClick);
+                }
+            );
         }
     }
 

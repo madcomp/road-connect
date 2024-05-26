@@ -10,8 +10,6 @@ export class TitleScreen extends Component {
     @property({ type: Node })
     private connect : Node;
 
-    public OnAnimationComplete : () => void;
-
     start() {
         var width = this.getComponent(UITransform).contentSize.width;
 
@@ -33,7 +31,7 @@ export class TitleScreen extends Component {
         .to(0.7,
             { position: new Vec3(0, connectY, connectZ) },
             { easing: easing.quadInOut })
-        .call(() => this.OnAnimationComplete?.())
+        .call(() => this.node.emit("OnAnimationComplete"))
         .start();
     }
 
