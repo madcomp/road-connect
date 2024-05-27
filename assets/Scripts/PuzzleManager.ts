@@ -12,8 +12,8 @@ export class PuzzleManager extends Component {
 
     private AllPieces: PuzzlePiece[] = [];
 
-    @property({ type: Node })
-    private PiecesGrid: Node;
+    @property({ type: UITransform })
+    private PiecesGrid: UITransform;
 
     @property({ type: Prefab })
     private PiecePrefab: Prefab;
@@ -52,17 +52,24 @@ export class PuzzleManager extends Component {
     populateLevel(level: LevelData, levelSprites: SpriteFrame[]) {
         
         var pieceSize: Size = null;
-        var startingPiecePosition: Vec3 = null;
-        var piecesGrid: Node = this.PiecesGrid;
-
-        function calculateStartingPiecePosition(): Vec3
+        if (this.PiecesGrid.contentSize.width > this.PiecesGrid.contentSize.height)
         {
-            // PiecesGrid position is exactly in the middle between pieces 12 and 23,
-            // so we calculate startingPiecePosition for piece 00 based on that.
-            var offset: Vec2 = new Vec2(1.5 * pieceSize.width, -2.5 * pieceSize.height);
-            var center = piecesGrid.position;
-            return new Vec3(center.x - offset.x, center.y - offset.y, center.z);
+            var height = this.PiecesGrid.contentSize.height / 4;
+            pieceSize = new Size(height, height);
         }
+        else
+        {
+            var width = this.PiecesGrid.contentSize.width / 4;
+            pieceSize = new Size(width, width);
+        }
+
+        var piecesGrid: Node = this.PiecesGrid.node;
+
+        // PiecesGrid position is exactly in the middle between pieces 11 and 22,
+        // so we calculate startingPiecePosition for piece 00 based on that.
+        var offset: Vec2 = new Vec2(1.5 * pieceSize.width, -1.5 * pieceSize.height);
+        var center = piecesGrid.position;
+        var startingPiecePosition = new Vec3(center.x - offset.x, center.y - offset.y, center.z);
 
         var hCount: number = 0;
         var vCount: number = 0;
@@ -72,8 +79,7 @@ export class PuzzleManager extends Component {
             {
                 var newPiece: PuzzlePiece = instantiate(this.PiecePrefab).getComponent(PuzzlePiece);
                 newPiece.node.parent = piecesGrid;
-                pieceSize = pieceSize || newPiece.getComponent(UITransform).contentSize;
-                startingPiecePosition = startingPiecePosition || calculateStartingPiecePosition();
+                newPiece.getComponent(UITransform).contentSize = pieceSize;
                 var x = startingPiecePosition.x + hCount * pieceSize.width;
                 var y = startingPiecePosition.y - vCount * pieceSize.height;;
                 newPiece.node.position = new Vec3(x, y, 0);
