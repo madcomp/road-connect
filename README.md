@@ -5,9 +5,9 @@ This project objective is to present a Cocos Creator version of the original Uni
 Unity 2019.2.17f1 => Cocos Creator 3.7.2
 ```
 ## Architecture overview
-One of the key points was to try to preserve the original naming, classes and patterns already being used in the Unity project. This way it is easier to compare changes and translate future updates in the original game version. Also I believe it is simpler to evaluate the exercise results for Infinity Games interviewer.
+One of the key points was to preserve the original naming, classes, and patterns used in the Unity project. This approach makes it easier to compare changes and translate future updates in the original game version. Additionally, it simplifies the evaluation of the exercise results for the Infinity Games interviewer.
 
-However, despite keeping most of classes and visual components original format, we have some differences:
+However, despite maintaining most of the classes and visual components in their original format, there are some differences:
 
 1. Cocos puzzle pieces are now UI components (Sprite-based nodes) instead of gameplay gameObjects in Unity (SpriteRenderer-based).
 2. Game settings (for SFX and Music) had code implementation in Unity but no visibility for the player, so it was removed in Cocos version.
@@ -20,7 +20,7 @@ However, despite keeping most of classes and visual components original format, 
 
 ## Unity version bugs
 
-The original Unity game has a solid and straighforward implementation, with not many bugs. Some of them were addressed above, but here is the full list:
+The original Unity game has a solid and straightforward implementation with few bugs. Some of them were addressed above, but here is the list of the ones I spotted:
 
 1. No support to landscape mode (depending on the aspect ratio the game become unusable)
 2. Minor mismatch between level number in level select button and the level title.
